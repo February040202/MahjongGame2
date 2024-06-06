@@ -185,7 +185,7 @@ public class GameRule {
     tiles.add(new MahjongTile("bonus", "white", 43));
     tiles.add(new MahjongTile("wan", "wan1", 1)); // Pair
 
-    System.out.println(isThirteenOrphans(tiles)); // should print true
+    System.out.println(isThirteenOrphans(tiles));
   }
 
 
