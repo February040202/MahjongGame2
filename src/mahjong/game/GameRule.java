@@ -37,7 +37,7 @@ public class GameRule {
     return Objects.equals(tiles.get(0), tiles.get(1)) && Objects.equals(tiles.get(1), tiles.get(2)) && Objects.equals(tiles.get(2), tiles.get(3));
   }
 
-  public static boolean canDraw(List<MahjongTile> list) {
+  public static boolean canWin(List<MahjongTile> list, MahjongTile lastTile) {
     list.sort(MahjongTile::compareTo);
     List<Integer> tilesValue = new ArrayList<>();
     for (MahjongTile tile : list) {
@@ -46,14 +46,19 @@ public class GameRule {
     Collections.sort(tilesValue);
 
     // 7 pair
-    if (isSevenParis(tilesValue)) {
+    if (isSevenParis(tilesValue, lastTile != null ? tileValueDict.getValue(lastTile.getKeyString()) : null)) {
       return true;
     }
-    return canDrawDfs(tilesValue, false);
+    // 13 orphans
+    else if (isThirteenOrphans(list)) {
+      return true;
+    }
+    // Normal
+    return canWinDfs(tilesValue, false);
 
   }
 
-  private static boolean canDrawDfs(List<Integer> tilesValue, boolean hasOnePair) {
+  private static boolean canWinDfs(List<Integer> tilesValue, boolean hasOnePair) {
     if (tilesValue.isEmpty()) {
       return hasOnePair;
     }
@@ -61,21 +66,21 @@ public class GameRule {
     if (tilesValue.size() >= 2) {
       if (!hasOnePair && canDrawTwo(tilesValue.get(0), tilesValue.get(1))) {
         List<Integer> newTilesValue = new ArrayList<>(tilesValue.subList(2, tilesValue.size()));
-        res |= canDrawDfs(newTilesValue, true);
+        res |= canWinDfs(newTilesValue, true);
       }
     }
 
     if (tilesValue.size() >= 3) {
       if (canDrawTwo(tilesValue.get(0), tilesValue.get(2))) {
         List<Integer> newTilesValue = new ArrayList<>(tilesValue.subList(3, tilesValue.size()));
-        res |= canDrawDfs(newTilesValue, hasOnePair);
+        res |= canWinDfs(newTilesValue, hasOnePair);
       }
     }
 
     if (tilesValue.size() >= 4) {
       if (canDrawTwo(tilesValue.get(0), tilesValue.get(3))) {
         List<Integer> newTilesValue = new ArrayList<>(tilesValue.subList(4, tilesValue.size()));
-        res |= canDrawDfs(newTilesValue, hasOnePair);
+        res |= canWinDfs(newTilesValue, hasOnePair);
       }
     }
 
@@ -94,7 +99,7 @@ public class GameRule {
             newTilesValue.add(tilesValue.get(j));
           }
         }
-        res |= canDrawDfs(newTilesValue, hasOnePair);
+        res |= canWinDfs(newTilesValue, hasOnePair);
         break;
       }
     }
@@ -108,29 +113,80 @@ public class GameRule {
   }
 
 
-  private static boolean isSevenParis(List<Integer> tilesValue) {
-    if (tilesValue.size() == 14) {
+  private static boolean isSevenParis(List<Integer> tilesValue, Integer lastTile) {
+    if (tilesValue.size() == 13 && lastTile != null) {
+      List<Integer> sevenParisValue = new ArrayList<>(tilesValue);
+      sevenParisValue.add(lastTile);
+      Collections.sort(sevenParisValue);
+      return isSevenPairsHelper(sevenParisValue);
+    } else if (tilesValue.size() == 14) {
+      return isSevenPairsHelper(tilesValue);
+    }
+    return false;
+  }
+
+  private static boolean isSevenPairsHelper(List<Integer> tilesValue) {
       for (int i = 0; i < 14; i += 2) {
         if (!Objects.equals(tilesValue.get(i), tilesValue.get(i + 1))) {
           return false;
         }
       }
       return true;
+  }
+
+  private static boolean isThirteenOrphans(List<MahjongTile> tiles) {
+    if (tiles.size() != 14) {
+      return false;
     }
 
-    return false;
+    Set<String> requiredTiles = new HashSet<>(Arrays.asList(
+            "wan-wan1", "wan-wan9", "tiao-tiao1", "tiao-tiao9", "tong-tong1", "tong-tong9",
+            "bonus-east", "bonus-south", "bonus-west", "bonus-north", "bonus-zhong", "bonus-fa", "bonus-white"
+    ));
+
+    Map<String, Integer> tileCount = new HashMap<>();
+    for (MahjongTile tile : tiles) {
+      String key = tile.getKeyString();
+      tileCount.put(key, tileCount.getOrDefault(key, 0) + 1);
+      requiredTiles.remove(key);
+    }
+
+    // Check if all required tiles are present
+    if (!requiredTiles.isEmpty()) {
+      return false;
+    }
+
+    // Check for the pair
+    boolean hasPair = false;
+    for (int count : tileCount.values()) {
+      if (count == 2) {
+        hasPair = true;
+        break;
+      }
+    }
+
+    return hasPair;
   }
 
   public static void main(String[] args) {
-    List<MahjongTile> list = new ArrayList<>();
-    list.add(new MahjongTile("wan", "wan2", 1));
-    list.add(new MahjongTile("wan", "wan2", 1));
-    list.add(new MahjongTile("wan", "wan2", 1));
-    list.add(new MahjongTile("wan", "wan3", 1));
-    list.add(new MahjongTile("wan", "wan3", 1));
-    list.add(new MahjongTile("wan", "wan4", 1));
-    list.add(new MahjongTile("wan", "wan5", 1));
-    list.add(new MahjongTile("wan", "wan6", 1));
-    System.out.println(canDraw(list));
+    List<MahjongTile> tiles = new ArrayList<>();
+    tiles.add(new MahjongTile("wan", "wan1", 1));
+    tiles.add(new MahjongTile("wan", "wan9", 9));
+    tiles.add(new MahjongTile("tiao", "tiao1", 11));
+    tiles.add(new MahjongTile("tiao", "tiao9", 19));
+    tiles.add(new MahjongTile("tong", "tong1", 21));
+    tiles.add(new MahjongTile("tong", "tong9", 29));
+    tiles.add(new MahjongTile("bonus", "east", 31));
+    tiles.add(new MahjongTile("bonus", "south", 35));
+    tiles.add(new MahjongTile("bonus", "west", 33));
+    tiles.add(new MahjongTile("bonus", "north", 37));
+    tiles.add(new MahjongTile("bonus", "zhong", 39));
+    tiles.add(new MahjongTile("bonus", "fa", 41));
+    tiles.add(new MahjongTile("bonus", "white", 43));
+    tiles.add(new MahjongTile("wan", "wan1", 1)); // Pair
+
+    System.out.println(isThirteenOrphans(tiles)); // should print true
   }
+
+
 }

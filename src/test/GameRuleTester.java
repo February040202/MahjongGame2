@@ -39,6 +39,9 @@ public class GameRuleTester {
         // 检查chow
         testChowRule();
 
+        // 检查Win
+        testWinRule();
+
         // 模拟游戏过程
 //        simulateGame();
     }
@@ -254,6 +257,158 @@ public class GameRuleTester {
             System.out.println("玩家" + (targetPlayerIndex + 1) + "不可以吃牌：" + discardTile.getKeyString());
         }
         System.out.println(" ");
+    }
+
+    private void testWinRule() {
+        System.out.println("----测试胡牌规则----");
+
+        // 首先测试七小对
+        testSevenPairs();
+
+        // 打印所有玩家手牌
+        displayAllHands();
+
+        // 然后测试十三幺
+        testThirteenOrphans();
+
+        // 打印所有玩家手牌
+        displayAllHands();
+
+        // 最后测试普通胡牌
+        testNormalWin();
+
+        // 打印所有玩家手牌
+        displayAllHands();
+    }
+
+    private void testThirteenOrphans() {
+        List<MahjongTile> tiles = new ArrayList<>();
+        MahjongTile lastTile = null;
+
+        tiles.add(new MahjongTile("wan", "wan1", 1));
+        tiles.add(new MahjongTile("wan", "wan9", 9));
+        tiles.add(new MahjongTile("tiao", "tiao1", 11));
+        tiles.add(new MahjongTile("tiao", "tiao9", 19));
+        tiles.add(new MahjongTile("tong", "tong1", 21));
+        tiles.add(new MahjongTile("tong", "tong9", 29));
+        tiles.add(new MahjongTile("bonus", "east", 31));
+        tiles.add(new MahjongTile("bonus", "south", 35));
+        tiles.add(new MahjongTile("bonus", "west", 33));
+        tiles.add(new MahjongTile("bonus", "north", 37));
+        tiles.add(new MahjongTile("bonus", "zhong", 39));
+        tiles.add(new MahjongTile("bonus", "fa", 41));
+        tiles.add(new MahjongTile("bonus", "white", 43));
+        tiles.add(new MahjongTile("wan", "wan1", 1)); // Pair
+
+        System.out.println(GameRule.canWin(tiles, lastTile)); // should print true
+    }
+
+    private void testSevenPairs() {
+        for (int i = 0; i < 2; i++) {
+            List<MahjongTile> tiles = new ArrayList<>();
+            if (i == 0) {//自摸七小对
+                System.out.println("自摸七小对");
+                MahjongTile lastTile = null;
+
+                tiles.add(new MahjongTile("wan", "wan1", 1));
+                tiles.add(new MahjongTile("wan", "wan1", 1));
+                tiles.add(new MahjongTile("tiao", "tiao2", 12));
+                tiles.add(new MahjongTile("tiao", "tiao2", 12));
+                tiles.add(new MahjongTile("tong", "tong3", 22));
+                tiles.add(new MahjongTile("tong", "tong3", 22));
+                tiles.add(new MahjongTile("bonus", "east", 31));
+                tiles.add(new MahjongTile("bonus", "east", 31));
+                tiles.add(new MahjongTile("bonus", "west", 33));
+                tiles.add(new MahjongTile("bonus", "west", 33));
+                tiles.add(new MahjongTile("bonus", "north", 37));
+                tiles.add(new MahjongTile("bonus", "north", 37));
+                tiles.add(new MahjongTile("bonus", "zhong", 39));
+                tiles.add(new MahjongTile("bonus", "zhong", 39));
+
+                System.out.println(GameRule.canWin(tiles, lastTile)); // should print true
+
+            } else {//非自摸七小对
+                System.out.println("非自摸七小对");
+                MahjongTile lastTile = new MahjongTile("tong", "tong3", 22);
+
+                tiles.add(new MahjongTile("wan", "wan1", 1));
+                tiles.add(new MahjongTile("wan", "wan1", 1));
+                tiles.add(new MahjongTile("tiao", "tiao2", 12));
+                tiles.add(new MahjongTile("tiao", "tiao2", 12));
+                tiles.add(new MahjongTile("tong", "tong3", 22));
+                //tiles.add(new MahjongTile("tong", "tong3", 22));
+                tiles.add(new MahjongTile("bonus", "east", 31));
+                tiles.add(new MahjongTile("bonus", "east", 31));
+                tiles.add(new MahjongTile("bonus", "west", 33));
+                tiles.add(new MahjongTile("bonus", "west", 33));
+                tiles.add(new MahjongTile("bonus", "north", 37));
+                tiles.add(new MahjongTile("bonus", "north", 37));
+                tiles.add(new MahjongTile("bonus", "zhong", 39));
+                tiles.add(new MahjongTile("bonus", "zhong", 39));
+
+                //System.out.println("Tiles: " + tiles.size());
+                System.out.println(GameRule.canWin(tiles, lastTile)); // should print true
+            }
+        }
+    }
+
+    private void testNormalWin() {
+        for (int i = 0; i < 2; i++) {
+            List<MahjongTile> tiles = new ArrayList<>();
+            if (i == 0) {//自摸
+                MahjongTile lastTile = null;
+
+                tiles.add(new MahjongTile("wan", "wan1", 1));
+                tiles.add(new MahjongTile("wan", "wan1", 1));
+                tiles.add(new MahjongTile("wan", "wan1", 1));
+
+                tiles.add(new MahjongTile("tiao", "tiao2", 12));
+                tiles.add(new MahjongTile("tiao", "tiao2", 12));
+                tiles.add(new MahjongTile("tiao", "tiao2", 12));
+
+                tiles.add(new MahjongTile("tong", "tong3", 22));
+                tiles.add(new MahjongTile("tong", "tong4", 23));
+                tiles.add(new MahjongTile("tong", "tong5", 24));
+
+                tiles.add(new MahjongTile("tong", "tong6", 25));
+                tiles.add(new MahjongTile("tong", "tong7", 26));
+                tiles.add(new MahjongTile("tong", "tong8", 27));
+
+                tiles.add(new MahjongTile("bonus", "east", 31));
+                tiles.add(new MahjongTile("bonus", "east", 31));
+
+                System.out.println(GameRule.canWin(tiles, lastTile)); // should print true
+
+            } else {//非自摸
+                MahjongTile lastTile = new MahjongTile("tiao", "tiao2", 12);
+
+                tiles.add(new MahjongTile("wan", "wan1", 1));
+                tiles.add(new MahjongTile("wan", "wan1", 1));
+                tiles.add(new MahjongTile("wan", "wan1", 1));
+
+                tiles.add(new MahjongTile("tiao", "tiao2", 12));
+                tiles.add(new MahjongTile("tiao", "tiao2", 12));
+                //tiles.add(new MahjongTile("tiao", "tiao2", 12));
+
+                tiles.add(new MahjongTile("tong", "tong3", 22));
+                tiles.add(new MahjongTile("tong", "tong4", 23));
+                tiles.add(new MahjongTile("tong", "tong5", 24));
+
+                tiles.add(new MahjongTile("tong", "tong6", 25));
+                tiles.add(new MahjongTile("tong", "tong7", 26));
+                tiles.add(new MahjongTile("tong", "tong8", 27));
+
+                tiles.add(new MahjongTile("bonus", "east", 31));
+                tiles.add(new MahjongTile("bonus", "east", 31));
+
+                System.out.println(GameRule.canWin(tiles, lastTile)); // should print true
+            }
+        }
+
+
+
+
+
     }
 
 //    private void simulateGame() {

@@ -76,7 +76,7 @@ public class MahjongGame implements Game {
           List<MahjongTile> cur = new ArrayList<>(players[0].handTiles);
           cur.add(gameState.last);
 
-          if (GameRule.canDraw(cur)) {
+          if (GameRule.canWin(cur, gameState.last)) {
             players[0].publicTiles.add(gameState.last);
             usedTile.remove(usedTile.size() - 1);
             playersOver();
@@ -85,7 +85,7 @@ public class MahjongGame implements Game {
       }
       // draw self
       else {
-        if (GameRule.canDraw(players[0].handTiles)) {
+        if (GameRule.canWin(players[0].handTiles, gameState.last)) {
           playersOver();
         }
       }
