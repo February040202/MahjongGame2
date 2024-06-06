@@ -15,14 +15,14 @@ public class MenuScreen extends JPanel {
   ImageIcon startGame;
   MenuListener listener;
 
-
   public MenuScreen(MenuListener menuListener) {
     listener = menuListener;
 
     startGame = new ImageIcon("img/startGame.png");
-    int[] xy = {Constant.SCREEN_WIDTH / 2 - startGame.getIconWidth() / 2, Constant.SCREEN_HEIGHT / 2 - startGame.getIconHeight() / 3};
-
-    Image image = startGame.getImage();
+    Image image = startGame.getImage().getScaledInstance(Constant.BUTTON_WIDTH, Constant.BUTTON_HEIGHT, Image.SCALE_SMOOTH);
+    startGame = new ImageIcon(image);
+    int[] xy = {Constant.SCREEN_WIDTH / 2 - Constant.BUTTON_WIDTH / 2, (3 * Constant.SCREEN_HEIGHT / 4) - Constant.BUTTON_HEIGHT / 2};
+//    Image image = startGame.getImage();
     addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
@@ -33,7 +33,6 @@ public class MenuScreen extends JPanel {
         }
       }
     });
-
   }
 
   public void paintComponent(Graphics g) {
@@ -42,14 +41,17 @@ public class MenuScreen extends JPanel {
 
   private void drawBackground(Graphics g) {
     Image menuBackground = new ImageIcon("img/menuBackground.png").getImage();
-    g.drawImage(menuBackground, 0, 0, this);
+    g.drawImage(menuBackground, 0, 0, Constant.SCREEN_WIDTH, Constant.SCREEN_HEIGHT, this);
 
     ImageIcon menuTitle = new ImageIcon("img/menuTitle.png");
-    g.drawImage(menuTitle.getImage(), Constant.SCREEN_WIDTH / 2 - menuTitle.getIconWidth() / 2, 0, this);
+    int menuTitleX = Constant.SCREEN_WIDTH / 2 - menuTitle.getIconWidth() / 2;
+    int menuTitleY = (Constant.SCREEN_HEIGHT / 4) - menuTitle.getIconHeight() / 2;
+    g.drawImage(menuTitle.getImage(), menuTitleX, menuTitleY, this);
 
-    g.drawImage(startGame.getImage(), Constant.SCREEN_WIDTH / 2 - startGame.getIconWidth() / 2, Constant.SCREEN_HEIGHT / 2 - startGame.getIconHeight() / 3, this);
 
-
+    // 调整startGame按钮位置，使其位于中间偏下的部分
+    int startGameX = Constant.SCREEN_WIDTH / 2 - Constant.BUTTON_WIDTH / 2;
+    int startGameY = (3 * Constant.SCREEN_HEIGHT / 4) - Constant.BUTTON_HEIGHT / 2;
+    g.drawImage(startGame.getImage(), startGameX, startGameY, Constant.BUTTON_WIDTH, Constant.BUTTON_HEIGHT, this);
   }
 }
-

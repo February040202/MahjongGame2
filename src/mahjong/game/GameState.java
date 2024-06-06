@@ -26,7 +26,7 @@ public class GameState {//为了监控麻将什么时候出几张牌
   // 01000 can 3select like gang other
   // 10000 can 4select like gang self
   int touchSelectState;
-  private int turn;
+  private static int turn;
 
   public GameState(long tick, MahjongTile last) {
     this.last = last;
@@ -37,13 +37,16 @@ public class GameState {//为了监控麻将什么时候出几张牌
   }
 
 
-  public int getTurn() {
+  public static int getTurn() {
     return turn;
   }
 
   public String getGameInfo() {
     gameInfo = "player " + turn + "'s turn!!!  tile played is " + last.getKeyString().substring(last.getKeyString().indexOf('-') + 1);
     return gameInfo;
+  }
+  public int getplayerTurn() {
+    return turn;
   }
 
   public boolean canTouch() {

@@ -195,7 +195,7 @@ public class MahjongGame implements Game {
 
   private void otherPlayerMove() {
     int turn = gameState.getTurn();
-    if (gameState.getTick() % 120 == 0) {
+    if (gameState.getTick() % 60 == 0) {
       MahjongTile tile = mahjongDeck.getTile();
       if (tile == null) {
         playersOver();
@@ -258,5 +258,9 @@ public class MahjongGame implements Game {
 
   public String getGameInfo() {
     return gameState.getGameInfo();
+  }
+
+  public int getTurn(){
+    return gameState.getplayerTurn();
   }
 }

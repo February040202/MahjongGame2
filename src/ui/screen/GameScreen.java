@@ -1,5 +1,6 @@
 package ui.screen;
 
+import mahjong.game.GameState;
 import mahjong.game.MahjongGame;
 import mahjong.model.ImageButton;
 import mahjong.model.MahjongTile;
@@ -17,7 +18,7 @@ public class GameScreen extends JPanel {
   private final MahjongGame game;
 
   // (start, end , deltx, delty)
-  public static int[][] playerXY = {{180, 850, 50, 0}, {110, 200, 0, 47}, {180, 100, 50, 0}, {830, 200, 0, 47}};
+  public static int[][] playerXY = {{120, 720, 40, 0}, {40, 160, 0, 36}, {120, 40, 40, 0}, {680, 160, 0, 36}};
   public static int[][] playerWH = {{Constant.MAHJONG_WIDTH, Constant.MAHJONG_HEIGHT}, {Constant.MAHJONG_HEIGHT, Constant.MAHJONG_WIDTH}, {Constant.MAHJONG_WIDTH, Constant.MAHJONG_HEIGHT}, {Constant.MAHJONG_HEIGHT, Constant.MAHJONG_WIDTH}};
   static Image bgTile = new ImageIcon(GameUtil.playerId2ImgPath(0)).getImage();
   static Image pubBgTile = new ImageIcon(GameUtil.playerId2ImgPath(5)).getImage();
@@ -30,66 +31,62 @@ public class GameScreen extends JPanel {
   private void addControllerButton() {
     setLayout(null);
     ImageButton draw = new ImageButton(ImageButton.ButtonType.DRAW, game.listener);
-    draw.setImageButton("img/PlayScreen/button/draw.png", 300, 650, 80, 100);
+    draw.setImageButton("img/PlayScreen/button/draw.png", 240, 550, 80, 100);
     ImageButton select = new ImageButton(ImageButton.ButtonType.SELECT, game.listener);
-    select.setImageButton("img/PlayScreen/button/select.png", 450, 650, 80, 100);
+    select.setImageButton("img/PlayScreen/button/select.png", 360, 550, 80, 100);
     ImageButton touch = new ImageButton(ImageButton.ButtonType.TOUCH, game.listener);
-    touch.setImageButton("img/PlayScreen/button/touch.png", 600, 650, 80, 100);
+    touch.setImageButton("img/PlayScreen/button/touch.png", 480, 550, 80, 100);
 
     add(draw);
     add(select);
     add(touch);
-
   }
 
-
   protected void paintComponent(Graphics g) {
-
     g.setColor(Color.BLUE);
-
     drawBackground(g);
     drawPlayersIcon(g);
     drawPlayerHandTiles(g);
     drawPlayerPublicTiles(g);
     drawUsedTiles(g);
+    updateRoundLabel(g, game.getTurn());
     if (game.isPlayerAlive()) {
       drawGameInfo(g);
     } else {
       drawWinBg(g);
     }
-
   }
 
   private void drawWinBg(Graphics g) {
     ImageIcon highScore = new ImageIcon("img/HighScore.png");
-    g.drawImage(highScore.getImage(), Constant.SCREEN_WIDTH / 3, Constant.SCREEN_HEIGHT / 3, 300, 300, this);
+    g.drawImage(highScore.getImage(), Constant.SCREEN_WIDTH / 3, Constant.SCREEN_HEIGHT / 3, 200, 200, this);
   }
 
   private void drawGameInfo(Graphics g) {
     g.setFont(new Font("Arial", Font.BOLD, 30));
     g.setColor(Color.gray);
-    g.drawString(game.getGameInfo(), 266, 221);
-    g.setColor(Color.red);
-    g.drawString(game.getGameInfo(), 265, 220);
+    g.drawString(game.getGameInfo(), 140, 70);
+    g.setColor(Color.white);
+    g.drawString(game.getGameInfo(), 140, 70);
+
   }
 
   private void drawUsedTiles(Graphics g) {
-    int[] xy = {250, 250, 50, 80};
+    int[] xy = {138, 180, Constant.USED_MAHJONG_WIDTH, Constant.USED_MAHJONG_HEIGHT};
     for (int i = 0; i < game.usedTile.size(); i++) {
       MahjongTile curTile = game.usedTile.get(i);
 
-      int x = xy[0] + (i % 10) * xy[2];
-      int y = xy[1] + (i / 10 % 5) * xy[3];
-      drawPublicBackgroundTile(g, x, y, Constant.MAHJONG_WIDTH, Constant.MAHJONG_HEIGHT);
+      int x = xy[0] + (i % 13) * xy[2];
+      int y = xy[1] + (i / 13) * xy[3];
+      drawPublicBackgroundTile(g, x, y, Constant.USED_MAHJONG_WIDTH, Constant.USED_MAHJONG_HEIGHT);
       Image image = new ImageIcon(GameUtil.tile2ImgPath(curTile)).getImage();
-      g.drawImage(image, x, y, Constant.MAHJONG_WIDTH, Constant.MAHJONG_HEIGHT, this);
+      g.drawImage(image, x, y, Constant.USED_MAHJONG_WIDTH, Constant.USED_MAHJONG_HEIGHT, this);
 
       if (i == game.usedTile.size() - 1) {
         Graphics2D g2d = (Graphics2D) g;
         float thickness = 4;
         g2d.setStroke(new BasicStroke(thickness));
-
-        g2d.drawRect(x, y, Constant.MAHJONG_WIDTH, Constant.MAHJONG_HEIGHT);
+        g2d.drawRect(x, y, Constant.USED_MAHJONG_WIDTH, Constant.USED_MAHJONG_HEIGHT);
       }
     }
   }
@@ -104,7 +101,6 @@ public class GameScreen extends JPanel {
         int x = playerXY[id][0] + i * playerXY[id][2];
         int y = playerXY[id][1] + i * playerXY[id][3] - (curTile.isChoose() ? 30 : 0);
 
-
         if (player.isOwnerPlayer()) {
           image = new ImageIcon(GameUtil.tile2ImgPath(curTile)).getImage();
           drawBackgroundTile(g, x, y - 10, playerWH[id][0], playerWH[id][1] + 10);
@@ -118,7 +114,7 @@ public class GameScreen extends JPanel {
   }
 
   private void drawPlayerPublicTiles(Graphics g) {
-    int[][] diff = {{-20, -100}, {20, 0}, {0, 20}, {-20, 0}};
+    int[][] diff = {{-20, -80}, {20, 0}, {0, 20}, {-20, 0}};
     if (!game.isPlayerAlive()) {
       diff[0][1] = 0;
     }
@@ -142,7 +138,6 @@ public class GameScreen extends JPanel {
     }
   }
 
-
   private void drawPublicBackgroundTile(Graphics g, int x, int y, int dx, int dy) {
     g.drawImage(pubBgTile, x, y, dx, dy, this);
   }
@@ -151,10 +146,9 @@ public class GameScreen extends JPanel {
     g.drawImage(bgTile, x, y, dx, dy, this);
   }
 
-
   private void drawBackground(Graphics g) {
     Image playBackground = new ImageIcon("img/playBackground.png").getImage();
-    g.drawImage(playBackground, 0, 0, this);
+    g.drawImage(playBackground, 0, 0, Constant.SCREEN_WIDTH, Constant.SCREEN_HEIGHT, this);
 
   }
 
@@ -164,10 +158,30 @@ public class GameScreen extends JPanel {
     Image player3 = new ImageIcon("img/PlayScreen/player3.png").getImage();
     Image player4 = new ImageIcon("img/PlayScreen/player4.png").getImage();
 
-    g.drawImage(player1, 10, 10, 120, 100, this);
-    g.drawImage(player2, 10, Constant.SCREEN_HEIGHT - 170, 100, 100, this);
-    g.drawImage(player3, Constant.SCREEN_WIDTH - 130, Constant.SCREEN_HEIGHT - 170, 100, 100, this);
-    g.drawImage(player4, Constant.SCREEN_WIDTH - 130, 10, 100, 100, this);
+    g.drawImage(player1, 10, 10, 110, 100, this);
+    g.drawImage(player2, 10, Constant.SCREEN_HEIGHT - 150, 100, 100, this);
+    g.drawImage(player3, Constant.SCREEN_WIDTH - 130, Constant.SCREEN_HEIGHT - 148, 100, 100, this);
+    g.drawImage(player4, Constant.SCREEN_WIDTH - 130, 13, 100, 100, this);
   }
 
+  // Method to update the round label with the appropriate image
+  public void updateRoundLabel(Graphics g, int round) {
+    int number = round + 1;
+    Image round1 = new ImageIcon("img/PlayScreen/Round/round" + number + ".png").getImage();
+    g.drawImage(round1, 380,100,50,50, this);
+    if(round == 0){
+      Image round2 = new ImageIcon("img/PlayScreen/Round/down.png").getImage();
+      g.drawImage(round2, 380,150,50,20, this);
+    }else if (round == 1){
+      Image round2 = new ImageIcon("img/PlayScreen/Round/left.png").getImage();
+      g.drawImage(round2, 360,100,20,50, this);
+    }else if (round == 2) {
+      Image round2 = new ImageIcon("img/PlayScreen/Round/up.png").getImage();
+      g.drawImage(round2, 380, 80, 50, 20, this);
+    }else if (round == 3) {
+      Image round2 = new ImageIcon("img/PlayScreen/Round/right.png").getImage();
+      g.drawImage(round2, 430, 100, 20, 50, this);
+    }
+
+  }
 }
