@@ -1,2 +1,1 @@
-# Course-Design-Mahjong
-# test edit readme
+# This is the back-end code used to test the basic functions of mahjong
