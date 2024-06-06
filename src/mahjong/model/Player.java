@@ -17,4 +17,17 @@ public class Player {
   public boolean isOwnerPlayer() {
     return id == 0;
   }
+
+  public List<MahjongTile> getHand() {
+    return handTiles;
+  }
+
+  public void drawTile(MahjongTile tile) {
+    handTiles.add(tile);
+  }
+
+  public void discardTile(MahjongTile tile) {
+    handTiles.remove(tile);
+  }
 }
+

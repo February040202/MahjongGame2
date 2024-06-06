@@ -4,7 +4,7 @@ package mahjong.model;
 import java.util.Objects;
 
 public class MahjongTile {
-  int id;
+  private int id;
   private final String type;
   private final String value;
 
@@ -16,6 +16,11 @@ public class MahjongTile {
     this.value = value;
     choose = false;
   }
+
+//  public MahjongTile(String type, int id) {
+//    this.type = type;
+//    this.id = id;
+//  }
 
   public String getKeyString() {
     return type + "-" + value;

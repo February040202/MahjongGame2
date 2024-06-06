@@ -3,11 +3,13 @@ package mahjong.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class MahjongDeck {// 基本不变
   List<MahjongTile> tilesLibrary;
   int curIndex;
   static MahjongTile nullTile;
+  private Random random;
 
   public MahjongDeck() {
     nullTile = new MahjongTile("null", "null", -1);
@@ -50,6 +52,17 @@ public class MahjongDeck {// 基本不变
     return nullTile;
   }
 
+  public List<MahjongTile> getTilesLibrary() {
+    return tilesLibrary;
+  }
+
+  public MahjongTile drawTile() {
+    if (tilesLibrary.isEmpty()) {
+      return null;
+    }
+    int index = random.nextInt(tilesLibrary.size());
+    return tilesLibrary.remove(index);
+  }
 }
 
 
