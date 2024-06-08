@@ -34,7 +34,7 @@ This process continues in the same manner.
 &#9829;When the player believes they have a winning hand, they should click the “Draw” button. If the hand meets the winning conditions, the game will declare the player victorious, and the game will end.
 
 ## Project screenshot
-![Menu](readMe.png)
+![Menu](img/readMe.png)
 ![GameScreen](img/readMe_GameScreen.png)
 
 ## Contribution
