@@ -2,15 +2,15 @@
 
 In a Java Mahjong game, traditional Mahjong rules are typically simulated, and players can interact with the game using a mouse. The game usually includes classic Mahjong gameplay elements such as drawing tiles, forming sets (like Pongs and Kongs), declaring Mahjong, and players need to arrange the tiles in their hands into valid combinations to achieve victory.
 
-## catalogue
+## Catalogue
 
-- [How to Play](#HowtoPlay)
+- [How to Play](#How_to_Play)
 - [Special Moves](#SpecialMoves)
 - [Contribution](#Contribution)
 - [Connect information](#Connectinformation)
 
 
-# How to Play
+# How_To_Play
 In this game, the player competes against three computer opponents:
 
 1. At the start of each round, the player must click the “Touch” button to draw a tile
@@ -26,7 +26,7 @@ In this game, the player competes against three computer opponents:
 
 This process continues in the same manner.
 
-# Special Moves
+# Special_Moves
  &#9829;When playing a regular tile, the player selects and plays one tile at a time.
  
  &#9829;When special moves like Chi, Pong, or Kong are available, the player can select and play multiple tiles.
