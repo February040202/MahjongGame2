@@ -4,7 +4,6 @@ import mahjong.game.GameRule;
 import mahjong.model.MahjongDeck;
 import mahjong.model.MahjongTile;
 import mahjong.model.Player;
-import mahjong.model.TileValueDict;
 import ui.listener.PlayerListener;
 
 import java.util.ArrayList;
@@ -41,6 +40,8 @@ public class GameRuleTester {
 
         // 检查Win
         testWinRule();
+
+
 
         // 模拟游戏过程
 //        simulateGame();
@@ -353,6 +354,7 @@ public class GameRuleTester {
     }
 
     private void testNormalWin() {
+        System.out.println("---testNormalWin---");
         for (int i = 0; i < 2; i++) {
             List<MahjongTile> tiles = new ArrayList<>();
             if (i == 0) {//自摸
@@ -400,6 +402,8 @@ public class GameRuleTester {
 
                 tiles.add(new MahjongTile("bonus", "east", 31));
                 tiles.add(new MahjongTile("bonus", "east", 31));
+
+                int size = tiles.size();
 
                 System.out.println(GameRule.canWin(tiles, lastTile)); // should print true
             }
