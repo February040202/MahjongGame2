@@ -4,10 +4,10 @@ In a Java Mahjong game, traditional Mahjong rules are typically simulated, and p
 
 ## catalogue
 
-- [How to play](#How to play)
-- [Special Moves](#Special Moves)
+- [How to Play](#HowtoPlay)
+- [Special Moves](#SpecialMoves)
 - [Contribution](#Contribution)
-- [Connect information](#Connect information)
+- [Connect information](#Connectinformation)
 
 
 # How to Play
