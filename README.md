@@ -4,13 +4,13 @@ In a Java Mahjong game, traditional Mahjong rules are typically simulated, and p
 
 ## Catalogue
 
-- [How to Play](#How_to_Play)
-- [Special Moves](#SpecialMoves)
+- [Introduction](#Introduction)
+- [Importance](#Importance)
 - [Contribution](#Contribution)
-- [Connect information](#Connectinformation)
+- [Connect information](#Connect)
 
 
-# How_To_Play
+# Introduction
 In this game, the player competes against three computer opponents:
 
 1. At the start of each round, the player must click the “Touch” button to draw a tile
@@ -26,7 +26,7 @@ In this game, the player competes against three computer opponents:
 
 This process continues in the same manner.
 
-# Special_Moves
+# Importance
  &#9829;When playing a regular tile, the player selects and plays one tile at a time.
  
  &#9829;When special moves like Chi, Pong, or Kong are available, the player can select and play multiple tiles.
@@ -42,7 +42,7 @@ Yuki (Siqi Du):Responsible for assisting in debugging and fixing issues for both
 
 Chiao (Zongxiang Jiao):Responsible for writing materials and participating in design discussions.
 
-# Connect information
+# Connect
 If you have any questions or suggestions, you can contact me at:
 
 February personal email: 2298540110@qq.com
