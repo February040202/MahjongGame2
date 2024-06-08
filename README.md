@@ -10,7 +10,7 @@ In a Java Mahjong game, traditional Mahjong rules are typically simulated, and p
 - [Connect information](#Connect)
 
 
-# Introduction
+## Introduction
 In this game, the player competes against three computer opponents:
 
 1. At the start of each round, the player must click the “Touch” button to draw a tile
@@ -26,18 +26,18 @@ In this game, the player competes against three computer opponents:
 
 This process continues in the same manner.
 
-# Importance
+## Importance
  &#9829;When playing a regular tile, the player selects and plays one tile at a time.
  
  &#9829;When special moves like Chi, Pong, or Kong are available, the player can select and play multiple tiles.
  
 &#9829;When the player believes they have a winning hand, they should click the “Draw” button. If the hand meets the winning conditions, the game will declare the player victorious, and the game will end.
 
-# Project screenshot
+## Project screenshot
 ![Menu](img/readMe.png)
 ![GameScreen](img/readMe_GameScreen.png)
 
-# Contribution
+## Contribution
 February (Zhiqiao Zhang):Responsible for front-end page design and code implementation.
 
 Jacksion (Jialu Zhang): Responsible for back-end code implementation of the game. 
@@ -46,7 +46,7 @@ Yuki (Siqi Du):Responsible for assisting in debugging and fixing issues for both
 
 Chiao (Zongxiang Jiao):Responsible for writing materials and participating in design discussions.
 
-# Connect
+## Connect 
 If you have any questions or suggestions, you can contact me at:
 
 February personal email: 2298540110@qq.com
