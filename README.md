@@ -25,11 +25,20 @@ This process continues in the same manner.
  
 &#9829;When the player believes they have a winning hand, they should click the “Draw” button. If the hand meets the winning conditions, the game will declare the player victorious, and the game will end.
 
-# Contribute 
+# Contribution
 February (Zhiqiao Zhang):Responsible for front-end page design and code implementation.
+
 Jacksion (Jialu Zhang): Responsible for back-end code implementation of the game. 
+
 Yuki (Siqi Du):Responsible for assisting in debugging and fixing issues for both front-end and back-end. 
+
 Chiao (Zongxiang Jiao):Responsible for writing materials and participating in design discussions.
 
+# Connect information
+If you have any questions or suggestions, you can contact me at:
+
+February personal email: 2298540110@qq.com
+
+GitHub: February040202
 
 
