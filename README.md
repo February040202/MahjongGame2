@@ -22,4 +22,14 @@ This process continues in the same manner.
  &#9829;When playing a regular tile, the player selects and plays one tile at a time.
  
  &#9829;When special moves like Chi, Pong, or Kong are available, the player can select and play multiple tiles.
+ 
+&#9829;When the player believes they have a winning hand, they should click the “Draw” button. If the hand meets the winning conditions, the game will declare the player victorious, and the game will end.
+
+# Contribute 
+February (Zhiqiao Zhang):Responsible for front-end page design and code implementation.
+Jacksion (Jialu Zhang): Responsible for back-end code implementation of the game. 
+Yuki (Siqi Du):Responsible for assisting in debugging and fixing issues for both front-end and back-end. 
+Chiao (Zongxiang Jiao):Responsible for writing materials and participating in design discussions.
+
+
 
