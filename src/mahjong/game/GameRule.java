@@ -5,10 +5,13 @@ import mahjong.model.TileValueDict;
 
 import java.util.*;
 
+// GameRule 类实现了麻将游戏中的一些核心规则，包括“吃”（Chow）、“碰”（Pong）、“杠”（Gang）以及判断玩家是否可以胡牌（Win）。
+// 该类还使用了单例模式（Singleton Pattern）来获取 TileValueDict 的实例，用于将麻将牌转换为数值。
 public class GameRule {
 
   public static TileValueDict tileValueDict = TileValueDict.getInstance();
 
+  // 判断是否可以吃牌
   public static boolean canChow(MahjongTile a, MahjongTile b, MahjongTile c) {
     List<Integer> tiles = new ArrayList<>();
     tiles.add(tileValueDict.getValue(a.getKeyString()));
@@ -18,6 +21,7 @@ public class GameRule {
     return tiles.get(0) + 1 == tiles.get(1) && tiles.get(1) + 1 == tiles.get(2);
   }
 
+  // 判断是否可以碰牌
   public static boolean canPong(MahjongTile a, MahjongTile b, MahjongTile c) {
     List<Integer> tiles = new ArrayList<>();
     tiles.add(tileValueDict.getValue(a.getKeyString()));
@@ -27,6 +31,7 @@ public class GameRule {
     return Objects.equals(tiles.get(0), tiles.get(1)) && Objects.equals(tiles.get(1), tiles.get(2));
   }
 
+  // 判断是否可以杠牌
   public static boolean canGang(MahjongTile a, MahjongTile b, MahjongTile c, MahjongTile d) {
     List<Integer> tiles = new ArrayList<>();
     tiles.add(tileValueDict.getValue(a.getKeyString()));
@@ -37,6 +42,7 @@ public class GameRule {
     return Objects.equals(tiles.get(0), tiles.get(1)) && Objects.equals(tiles.get(1), tiles.get(2)) && Objects.equals(tiles.get(2), tiles.get(3));
   }
 
+  // 判断是否可以胡牌
   public static boolean canWin(List<MahjongTile> list, MahjongTile lastTile) {
     list.sort(MahjongTile::compareTo);
     List<Integer> tilesValue = new ArrayList<>();
@@ -58,6 +64,7 @@ public class GameRule {
 
   }
 
+  // 递归检查胡牌
   private static boolean canWinDfs(List<Integer> tilesValue, boolean hasOnePair) {
     if (tilesValue.isEmpty()) {
       return hasOnePair;
@@ -108,11 +115,12 @@ public class GameRule {
   }
 
 
+  // 辅助方法，判断两个牌值是否相等
   private static boolean canDrawTwo(Integer a, int b) {
     return a == b;
   }
 
-
+  // 辅助方法，判断是否是七对子
   private static boolean isSevenParis(List<Integer> tilesValue, Integer lastTile) {
     if (tilesValue.size() == 13 && lastTile != null) {
       List<Integer> sevenParisValue = new ArrayList<>(tilesValue);
@@ -125,6 +133,7 @@ public class GameRule {
     return false;
   }
 
+  // 辅助方法，判断牌组是否满足七对规则
   private static boolean isSevenPairsHelper(List<Integer> tilesValue) {
       for (int i = 0; i < 14; i += 2) {
         if (!Objects.equals(tilesValue.get(i), tilesValue.get(i + 1))) {
@@ -134,6 +143,7 @@ public class GameRule {
       return true;
   }
 
+  // 辅助方法，判断是否是十三幺
   private static boolean isThirteenOrphans(List<MahjongTile> tiles) {
     if (tiles.size() != 14) {
       return false;

@@ -6,6 +6,13 @@ import java.util.Map;
 /**
  * Singleton
  */
+/*
+这段代码实现了一个使用单例模式（Singleton Pattern）的类 TileValueDict，该类用于将麻将牌转换为对应的数值。
+这种设计模式确保一个类只有一个实例，并提供全局访问点。
+
+This code implements a class, TileValueDict, that uses the Singleton Pattern to convert the mahjong cards to the corresponding value.
+This design pattern ensures that there is only one instance of a class and provides a global access point.
+ */
 public class TileValueDict {//单例模式（assessment的要求） 把麻将转换成数字，后续让rule类更简洁
   private static TileValueDict instance;
 
