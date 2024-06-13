@@ -44,7 +44,7 @@ Jacksion (Jialu Zhang): Responsible for back-end code implementation of the game
 
 Yuki (Siqi Du):Responsible for assisting in debugging and fixing issues for both front-end and back-end. 
 
-Chiao (Zongxiang Jiao):Responsible for writing materials and participating in design discussions.
+Chiao (Zongxiang Jiao):Responsible for writing materials and participating in back-end test section.
 
 ## Connect 
 If you have any questions or suggestions, you can contact me at:
