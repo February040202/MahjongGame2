@@ -5,6 +5,9 @@ import mahjong.model.MahjongTile;
 /**
  * 状态机
  */
+
+// 这个 GameState 类实现了一个简单的麻将游戏状态管理器，通过时间戳、玩家轮次和触摸选择状态来管理游戏的进行。
+// 它提供了方法来获取游戏状态信息、判断是否可以进行特定操作以及更新游戏状态。
 public class GameState {//为了监控麻将什么时候出几张牌
 
   public long getTick() {
